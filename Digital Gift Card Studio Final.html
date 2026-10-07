@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<!-- saved from url=(0458)file:///C:/Users/BANGHO/Downloads/digital_gift_card_studio%20(5).html#eyJiIjoiUHVlIHRpZW5kYSBtYXRlcmEiLCJ0IjoiQWd1cyBNYXJjZWxsaW5pIiwiZiI6Ik1hcnUsIFRhbWkgeSBab2UiLCJhIjoiTWF0ZSBSYW5jaGVybyBQZXJzb25hbGl6YWRvIiwibSI6IqFRdWUgZGlzZnJ1dGVzIG11Y2jtc2ltbyBlc3RlIHJlZ2FsbyBlc3BlY2lhbCEgWSBxdWUgY29tcGFydGFtb3MgbXVjaG9zIG1hdGVzIG3hcyBqdW50YXMiLCJjIjoiR0lGVC1BUzNQLVQ0IiwiZSI6IlbhbGlkbyBwb3IgMzAgZO1hcyIsInIiOiJAcHVlLnRpZW5kYW1hdGVyYWNvbG9uIiwicyI6InRoZW1lLXNhbHZpYSJ9 -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Gift Card Studio</title>
+  <!-- Tailwind CSS -->
+  <script src="./Digital Gift Card Studio Final_files/saved_resource"></script>
+  <!-- Google Fonts: Montserrat & Space Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./Digital Gift Card Studio Final_files/css2" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+            mono: ['Space Mono', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --card-bg: #F3F6F3;
+      --card-border: #C8D3C8;
+      --text-primary: #19271E;
+      --text-secondary: #526656;
+      --accent: #486350;
+      --accent-soft: #DFE7DF;
+    }
+
+    .theme-salvia {
+      --card-bg: #F3F6F3;
+      --card-border: #C8D3C8;
+      --text-primary: #19271E;
+      --text-secondary: #526656;
+      --accent: #486350;
+      --accent-soft: #DFE7DF;
+    }
+
+    .theme-oliva {
+      --card-bg: #F7F7F0;
+      --card-border: #D6D8C5;
+      --text-primary: #27281D;
+      --text-secondary: #636650;
+      --accent: #6E7152;
+      --accent-soft: #EAECE0;
+    }
+
+    .theme-bosque {
+      --card-bg: #14241B;
+      --card-border: #283E30;
+      --text-primary: #F0F5F1;
+      --text-secondary: #9DB5A5;
+      --accent: #689278;
+      --accent-soft: #1F3628;
+    }
+
+    .theme-menta {
+      --card-bg: #F0F7F4;
+      --card-border: #C3DDD5;
+      --text-primary: #122B25;
+      --text-secondary: #476B61;
+      --accent: #2E7A68;
+      --accent-soft: #D7EAE4;
+    }
+
+    .theme-jade {
+      --card-bg: #ECF3F0;
+      --card-border: #BED1C7;
+      --text-primary: #0F231D;
+      --text-secondary: #3E6357;
+      --accent: #21594A;
+      --accent-soft: #D3E4DC;
+    }
+
+    .gc-face {
+      background-color: var(--card-bg);
+      border-color: var(--card-border);
+      color: var(--text-primary);
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+
+    .gc-text-p { color: var(--text-primary); }
+    .gc-text-s { color: var(--text-secondary); }
+    .gc-accent-bg { background-color: var(--accent); }
+    .gc-accent-soft-bg { background-color: var(--accent-soft); }
+    .gc-border { border-color: var(--card-border); }
+
+    /* Strict 3D Card Architecture (Prevents vertical drop) */
+    .card-perspective {
+      perspective: 1200px;
+    }
+
+    .card-flipper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: center center;
+    }
+
+    .card-flipper.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-front-face,
+    .card-back-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    .card-front-face {
+      transform: rotateY(0deg);
+      z-index: 2;
+    }
+
+    .card-back-face {
+      transform: rotateY(180deg);
+      z-index: 1;
+    }
+
+    .bg-pattern {
+      background-image: radial-gradient(rgba(33, 89, 74, 0.06) 1px, transparent 0);
+      background-size: 20px 20px;
+    }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Montserrat, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:Space Mono, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.relative{position:relative}.sticky{position:sticky}.bottom-6{bottom:1.5rem}.right-6{right:1.5rem}.top-0{top:0px}.z-30{z-index:30}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-1{margin-top:0.25rem;margin-bottom:0.25rem}.my-auto{margin-top:auto;margin-bottom:auto}.mb-0\.5{margin-bottom:0.125rem}.mb-1{margin-bottom:0.25rem}.mb-1\.5{margin-bottom:0.375rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.ml-2{margin-left:0.5rem}.mt-2{margin-top:0.5rem}.mt-3{margin-top:0.75rem}.line-clamp-2{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[1\.586\/1\]{aspect-ratio:1.586/1}.h-16{height:4rem}.h-2{height:0.5rem}.h-2\.5{height:0.625rem}.h-3{height:0.75rem}.h-3\.5{height:0.875rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\[2px\]{height:2px}.h-full{height:100%}.max-h-\[350px\]{max-height:350px}.min-h-\[300px\]{min-height:300px}.min-h-\[460px\]{min-height:460px}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-2{width:0.5rem}.w-2\.5{width:0.625rem}.w-3{width:0.75rem}.w-3\.5{width:0.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-8{width:2rem}.w-full{width:100%}.max-w-7xl{max-width:80rem}.max-w-\[200px\]{max-width:200px}.max-w-lg{max-width:32rem}.shrink-0{flex-shrink:0}.flex-grow{flex-grow:1}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.resize-none{resize:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.items-baseline{align-items:baseline}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-8{gap:2rem}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.875rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.875rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.break-words{overflow-wrap:break-word}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-\[\#283E30\]{--tw-border-opacity:1;border-color:rgb(40 62 48 / var(--tw-border-opacity, 1))}.border-\[\#BED1C7\]{--tw-border-opacity:1;border-color:rgb(190 209 199 / var(--tw-border-opacity, 1))}.border-\[\#C3DDD5\]{--tw-border-opacity:1;border-color:rgb(195 221 213 / var(--tw-border-opacity, 1))}.border-\[\#C8D3C8\]{--tw-border-opacity:1;border-color:rgb(200 211 200 / var(--tw-border-opacity, 1))}.border-\[\#D6D8C5\]{--tw-border-opacity:1;border-color:rgb(214 216 197 / var(--tw-border-opacity, 1))}.border-emerald-100{--tw-border-opacity:1;border-color:rgb(209 250 229 / var(--tw-border-opacity, 1))}.border-emerald-200{--tw-border-opacity:1;border-color:rgb(167 243 208 / var(--tw-border-opacity, 1))}.border-emerald-200\/80{border-color:rgb(167 243 208 / 0.8)}.border-emerald-800{--tw-border-opacity:1;border-color:rgb(6 95 70 / var(--tw-border-opacity, 1))}.border-emerald-900\/10{border-color:rgb(6 78 59 / 0.1)}.border-transparent{border-color:transparent}.bg-\[\#14241B\]{--tw-bg-opacity:1;background-color:rgb(20 36 27 / var(--tw-bg-opacity, 1))}.bg-\[\#21594A\]{--tw-bg-opacity:1;background-color:rgb(33 89 74 / var(--tw-bg-opacity, 1))}.bg-\[\#2E7A68\]{--tw-bg-opacity:1;background-color:rgb(46 122 104 / var(--tw-bg-opacity, 1))}.bg-\[\#486350\]{--tw-bg-opacity:1;background-color:rgb(72 99 80 / var(--tw-bg-opacity, 1))}.bg-\[\#689278\]{--tw-bg-opacity:1;background-color:rgb(104 146 120 / var(--tw-bg-opacity, 1))}.bg-\[\#6E7152\]{--tw-bg-opacity:1;background-color:rgb(110 113 82 / var(--tw-bg-opacity, 1))}.bg-\[\#ECF3F0\]{--tw-bg-opacity:1;background-color:rgb(236 243 240 / var(--tw-bg-opacity, 1))}.bg-\[\#F0F7F4\]{--tw-bg-opacity:1;background-color:rgb(240 247 244 / var(--tw-bg-opacity, 1))}.bg-\[\#F3F6F3\]{--tw-bg-opacity:1;background-color:rgb(243 246 243 / var(--tw-bg-opacity, 1))}.bg-\[\#F7F7F0\]{--tw-bg-opacity:1;background-color:rgb(247 247 240 / var(--tw-bg-opacity, 1))}.bg-emerald-50{--tw-bg-opacity:1;background-color:rgb(236 253 245 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-emerald-800{--tw-bg-opacity:1;background-color:rgb(6 95 70 / var(--tw-bg-opacity, 1))}.bg-emerald-900{--tw-bg-opacity:1;background-color:rgb(6 78 59 / var(--tw-bg-opacity, 1))}.bg-emerald-950{--tw-bg-opacity:1;background-color:rgb(2 44 34 / var(--tw-bg-opacity, 1))}.bg-emerald-950\/5{background-color:rgb(2 44 34 / 0.05)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.pb-1{padding-bottom:0.25rem}.pb-2{padding-bottom:0.5rem}.pt-1{padding-top:0.25rem}.pt-2{padding-top:0.5rem}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:Space Mono, monospace}.font-sans{font-family:Montserrat, sans-serif}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[8px\]{font-size:8px}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-\[0\.2em\]{letter-spacing:0.2em}.tracking-\[0\.4em\]{letter-spacing:0.4em}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-50{--tw-text-opacity:1;color:rgb(236 253 245 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-emerald-700\/70{color:rgb(4 120 87 / 0.7)}.text-emerald-800{--tw-text-opacity:1;color:rgb(6 95 70 / var(--tw-text-opacity, 1))}.text-emerald-800\/80{color:rgb(6 95 70 / 0.8)}.text-emerald-900{--tw-text-opacity:1;color:rgb(6 78 59 / var(--tw-text-opacity, 1))}.text-emerald-950{--tw-text-opacity:1;color:rgb(2 44 34 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-0{opacity:0}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.hover\:bg-black\/5:hover{background-color:rgb(0 0 0 / 0.05)}.hover\:bg-emerald-100:hover{--tw-bg-opacity:1;background-color:rgb(209 250 229 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-900:hover{--tw-bg-opacity:1;background-color:rgb(6 78 59 / var(--tw-bg-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:opacity-90:hover{opacity:0.9}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-emerald-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(16 185 129 / var(--tw-ring-opacity, 1))}.group:hover .group-hover\:translate-x-0\.5{--tw-translate-x:0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width: 640px){.sm\:gap-3{gap:0.75rem}.sm\:p-2\.5{padding:0.625rem}.sm\:p-6{padding:1.5rem}.sm\:p-7{padding:1.75rem}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-2xl{font-size:1.5rem;line-height:2rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}.sm\:text-xs{font-size:0.75rem;line-height:1rem}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:col-span-12{grid-column:span 12 / span 12}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:p-8{padding:2rem}.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style></head>
+<body class="bg-emerald-950/5 text-emerald-950 font-sans min-h-screen flex flex-col bg-pattern antialiased">
+
+  <header class="bg-white/90 backdrop-blur-md border-b border-emerald-900/10 sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-emerald-800 text-white flex items-center justify-center font-sans font-bold text-xs tracking-wider">G</div>
+        <h1 class="font-sans text-base sm:text-lg font-bold tracking-tight text-emerald-950">Gift Card Studio</h1>
+      </div>
+      
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button id="header-flip-btn" class="text-xs sm:text-sm bg-emerald-50 hover:bg-emerald-100 text-emerald-900 px-3 py-2 rounded-lg font-medium transition flex items-center gap-1.5 border border-emerald-200/80">
+          <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          Girar
+        </button>
+
+        <button id="header-share-btn" class="text-xs sm:text-sm bg-emerald-800 text-white hover:bg-emerald-900 px-3.5 py-2 rounded-lg font-semibold transition shadow-sm flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+          <span>Compartir Link</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div id="recipient-banner" class="bg-emerald-900 text-emerald-50 px-4 py-3 text-center text-xs sm:text-sm font-medium shadow-inner flex flex-wrap items-center justify-center gap-2">
+    <span>🎁 Te enviaron una <strong>Gift Card Digital</strong>. Tocá la tarjeta para ver los detalles.</span>
+    <button id="create-new-card-btn" class="underline hover:text-white ml-2 text-xs font-semibold bg-emerald-800 hover:bg-emerald-700 px-2.5 py-1 rounded transition">Crear una propia</button>
+  </div>
+
+  <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <section id="editor-sidebar" class="lg:col-span-5 bg-white p-5 sm:p-6 rounded-2xl border border-emerald-900/10 shadow-sm space-y-5 hidden">
+        <div>
+          <h2 class="text-base font-bold text-emerald-950 mb-0.5">Personalización</h2>
+          <p class="text-xs text-emerald-700/70">Diseñá tu tarjeta digital y compartí el link directo por WhatsApp.</p>
+        </div>
+
+        <!-- Green Theme Selector -->
+        <div>
+          <label class="block text-xs font-bold text-emerald-900 uppercase tracking-wider mb-2">Paleta de Verdes</label>
+          <div class="grid grid-cols-5 gap-2" id="theme-selector">
+            <button data-theme="theme-salvia" class="theme-opt h-9 rounded-lg border-2 border-emerald-800 flex items-center justify-center p-1" title="Verde Salvia">
+              <span class="w-full h-full rounded bg-[#F3F6F3] border border-[#C8D3C8] flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#486350]"></span>
+              </span>
+            </button>
+            <button data-theme="theme-oliva" class="theme-opt h-9 rounded-lg border-2 border-transparent flex items-center justify-center p-1 title=" oliva="" orgánico"="">
+              <span class="w-full h-full rounded bg-[#F7F7F0] border border-[#D6D8C5] flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#6E7152]"></span>
+              </span>
+            </button>
+            <button data-theme="theme-bosque" class="theme-opt h-9 rounded-lg border-2 border-transparent flex items-center justify-center p-1" title="Bosque Profundo">
+              <span class="w-full h-full rounded bg-[#14241B] border border-[#283E30] flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#689278]"></span>
+              </span>
+            </button>
+            <button data-theme="theme-menta" class="theme-opt h-9 rounded-lg border-2 border-transparent flex items-center justify-center p-1" title="Menta Suave">
+              <span class="w-full h-full rounded bg-[#F0F7F4] border border-[#C3DDD5] flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#2E7A68]"></span>
+              </span>
+            </button>
+            <button data-theme="theme-jade" class="theme-opt h-9 rounded-lg border-2 border-transparent flex items-center justify-center p-1" title="Jade Botánico">
+              <span class="w-full h-full rounded bg-[#ECF3F0] border border-[#BED1C7] flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#21594A]"></span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <hr class="border-emerald-100">
+
+        <!-- Form Fields -->
+        <div class="space-y-3.5">
+          <div>
+            <label for="input-brand" class="block text-xs font-semibold text-emerald-900 mb-1">Nombre del Emprendimiento (Sin Negrita)</label>
+            <input type="text" id="input-brand" value="MI EMPRENDIMIENTO" class="w-full px-3 py-2 border border-emerald-200 rounded-lg text-sm font-normal focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="input-to" class="block text-xs font-semibold text-emerald-900 mb-1">Para (Destinatario)</label>
+              <input type="text" id="input-to" value="Camila López" class="w-full px-3 py-2 border border-emerald-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+            <div>
+              <label for="input-from" class="block text-xs font-semibold text-emerald-900 mb-1">De (Emisor)</label>
+              <input type="text" id="input-from" value="Martín &amp; Flia" class="w-full px-3 py-2 border border-emerald-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+          </div>
+
+          <div>
+            <label for="input-amount" class="block text-xs font-semibold text-emerald-900 mb-1">Monto o Servicio</label>
+            <input type="text" id="input-amount" value="$ 30.000" class="w-full px-3 py-2 border border-emerald-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+
+          <div>
+            <label for="input-message" class="block text-xs font-semibold text-emerald-900 mb-1">Dedicatoria / Mensaje</label>
+            <textarea id="input-message" rows="2" class="w-full px-3 py-2 border border-emerald-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none">¡Que disfrutes muchísimo este regalo especial! Te mandamos un abrazo gigante.</textarea>
+          </div>
+
+          <div>
+            <label for="input-code" class="block text-xs font-semibold text-emerald-900 mb-1">Código de Canje</label>
+            <div class="flex gap-2">
+              <input type="text" id="input-code" value="GIFT-7721-V4" class="w-full px-3 py-2 border border-emerald-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <button id="rand-code-btn" type="button" class="px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-lg text-xs font-semibold transition border border-emerald-200 shrink-0">
+                Azar
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="input-expiry" class="block text-xs font-semibold text-emerald-900 mb-1">Validez</label>
+              <input type="text" id="input-expiry" value="Válido por 90 días" class="w-full px-3 py-2 border border-emerald-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+            <div>
+              <label for="input-terms" class="block text-xs font-semibold text-emerald-900 mb-1">Condiciones</label>
+              <input type="text" id="input-terms" value="Presentar por WhatsApp" class="w-full px-3 py-2 border border-emerald-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-emerald-100">
+          <button id="main-share-btn" type="button" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 shadow-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+            <span>Copiar Link para Regalar</span>
+          </button>
+          <p class="text-[11px] text-emerald-700/70 text-center mt-2">
+            Genera un enlace web limpio que abre directo en el teléfono o compu de quien recibe el regalo.
+          </p>
+        </div>
+      </section>
+
+      <section id="preview-area" class="flex flex-col items-center justify-center min-h-[460px] lg:col-span-12">
+        <div class="w-full max-w-lg space-y-4">
+          
+          <div class="flex items-center justify-between text-xs text-emerald-800/80 px-1">
+            <span class="flex items-center gap-1.5 font-medium">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              Tarjeta 3D Interactiva
+            </span>
+            <span id="side-indicator" class="font-semibold text-emerald-900">Vista: Dorso</span>
+          </div>
+
+          <!-- FIXED 3D CONTAINER: Strict aspect ratio & rigid heights -->
+          <div class="w-full card-perspective">
+            <div class="w-full relative aspect-[1.586/1] min-h-[300px] max-h-[350px]">
+              <div id="card-flipper" class="card-flipper theme-salvia flipped">
+                
+                <!-- FRONT FACE -->
+                <div class="card-front-face gc-face rounded-2xl border p-6 sm:p-8 shadow-xl flex flex-col justify-between overflow-hidden cursor-pointer select-none">
+                  
+                  <div class="text-center pt-1">
+                    <span class="text-xs sm:text-sm font-bold tracking-[0.4em] uppercase gc-text-s block">
+                      GIFT CARD
+                    </span>
+                  </div>
+
+                  <!-- Brand Name (Regular / Non-Bold Montserrat) -->
+                  <div class="text-center my-auto py-2 flex flex-col items-center justify-center w-full px-2">
+                    <div class="w-10 h-[2px] gc-accent-bg mx-auto mb-3"></div>
+                    <h2 id="card-brand-front" class="font-sans text-xl sm:text-2xl font-normal uppercase tracking-widest gc-text-p w-full break-words line-clamp-2 leading-relaxed">Pue tienda matera</h2>
+                    <div class="w-10 h-[2px] gc-accent-bg mx-auto mt-3"></div>
+                  </div>
+
+                  <div class="text-center pb-1">
+                    <button type="button" class="flip-action-btn inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase gc-accent-soft-bg gc-text-p hover:opacity-90 transition border gc-border shadow-sm group">
+                      <span>Ver Detalles</span>
+                      <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                  </div>
+
+                </div>
+
+                <!-- BACK FACE -->
+                <div class="card-back-face gc-face rounded-2xl border p-5 sm:p-7 shadow-xl flex flex-col justify-between overflow-hidden">
+                  
+                  <!-- Header -->
+                  <div class="flex justify-between items-center pb-2 border-b gc-border gap-2">
+                    <span class="text-[11px] font-bold tracking-[0.2em] uppercase gc-text-s shrink-0">
+                      GIFT CARD
+                    </span>
+                    <span id="card-brand-back" class="text-xs font-normal uppercase tracking-wider gc-text-s truncate max-w-[200px] text-right">Pue tienda matera</span>
+                  </div>
+
+                  <!-- Details -->
+                  <div class="space-y-2 text-xs sm:text-sm my-auto py-1">
+                    <div class="flex justify-between items-baseline border-b pb-1 gc-border">
+                      <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider gc-text-s">Para</span>
+                      <span id="card-to" class="font-semibold text-xs sm:text-sm gc-text-p">Agus Marcellini</span>
+                    </div>
+                    <div class="flex justify-between items-baseline border-b pb-1 gc-border">
+                      <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider gc-text-s">De</span>
+                      <span id="card-from" class="font-semibold text-xs sm:text-sm gc-text-p">Maru, Tami y Zoe</span>
+                    </div>
+                    <div class="flex justify-between items-baseline border-b pb-1 gc-border">
+                      <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider gc-text-s">Monto / Regalo</span>
+                      <span id="card-amount" class="font-sans text-base sm:text-lg font-bold gc-text-p">Mate Ranchero Personalizado</span>
+                    </div>
+
+                    <div class="p-2 sm:p-2.5 rounded-lg gc-accent-soft-bg text-center my-1">
+                      <p id="card-message" class="font-medium italic text-xs leading-relaxed gc-text-p line-clamp-2">"¡Que disfrutes muchísimo este regalo especial! Y que compartamos muchos mates más juntas"</p>
+                    </div>
+
+                    <div class="text-center p-1.5 rounded border border-dashed gc-border relative">
+                      <p class="text-[8px] font-bold uppercase tracking-widest gc-text-s mb-0.5">Código de Canje</p>
+                      <div class="flex items-center justify-center gap-2">
+                        <span id="card-code" class="font-mono text-xs sm:text-sm font-bold tracking-wider gc-text-p">GIFT-AS3P-T4</span>
+                        <button id="copy-code-btn" type="button" class="p-1 hover:bg-black/5 rounded transition text-emerald-800" title="Copiar Código">
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Footer -->
+                  <div class="pt-1 border-t gc-border">
+                    <div class="text-center text-[10px] font-medium leading-tight gc-text-s mb-1.5">
+                      <span id="card-expiry">Válido por 30 días</span> • <span id="card-terms">@pue.tiendamateracolon</span>
+                    </div>
+                    <div class="text-center">
+                      <button type="button" class="flip-action-btn inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-emerald-50 hover:bg-emerald-100 text-emerald-800 transition border border-emerald-200">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        <span>Volver al Frente</span>
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Toast Popup -->
+          <div id="toast" class="opacity-0 transition-opacity duration-300 fixed bottom-6 right-6 bg-emerald-950 text-white text-xs px-4 py-2.5 rounded-lg shadow-xl flex items-center gap-2 z-50 pointer-events-none font-sans font-medium">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span id="toast-msg">Link copiado al portapapeles</span>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // DOM References
+      const inputBrand = document.getElementById('input-brand');
+      const inputTo = document.getElementById('input-to');
+      const inputFrom = document.getElementById('input-from');
+      const inputAmount = document.getElementById('input-amount');
+      const inputMessage = document.getElementById('input-message');
+      const inputCode = document.getElementById('input-code');
+      const inputExpiry = document.getElementById('input-expiry');
+      const inputTerms = document.getElementById('input-terms');
+
+      const cardBrandFront = document.getElementById('card-brand-front');
+      const cardBrandBack = document.getElementById('card-brand-back');
+      const cardTo = document.getElementById('card-to');
+      const cardFrom = document.getElementById('card-from');
+      const cardAmount = document.getElementById('card-amount');
+      const cardMessage = document.getElementById('card-message');
+      const cardCode = document.getElementById('card-code');
+      const cardExpiry = document.getElementById('card-expiry');
+      const cardTerms = document.getElementById('card-terms');
+
+      const cardFlipper = document.getElementById('card-flipper');
+      const headerFlipBtn = document.getElementById('header-flip-btn');
+      const flipActionBtns = document.querySelectorAll('.flip-action-btn');
+      const sideIndicator = document.getElementById('side-indicator');
+
+      const randCodeBtn = document.getElementById('rand-code-btn');
+      const copyCodeBtn = document.getElementById('copy-code-btn');
+      const headerShareBtn = document.getElementById('header-share-btn');
+      const mainShareBtn = document.getElementById('main-share-btn');
+      const themeSelector = document.getElementById('theme-selector');
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-msg');
+
+      const recipientBanner = document.getElementById('recipient-banner');
+      const editorSidebar = document.getElementById('editor-sidebar');
+      const previewArea = document.getElementById('preview-area');
+      const createNewCardBtn = document.getElementById('create-new-card-btn');
+
+      let activeTheme = 'theme-salvia';
+
+      // Live Form Binding
+      inputBrand.addEventListener('input', (e) => {
+        const val = e.target.value.trim() || 'MI EMPRENDIMIENTO';
+        cardBrandFront.textContent = val;
+        cardBrandBack.textContent = val;
+      });
+
+      function bindField(input, elem, format = v => v) {
+        input.addEventListener('input', (e) => {
+          elem.textContent = format(e.target.value) || '—';
+        });
+      }
+
+      bindField(inputTo, cardTo);
+      bindField(inputFrom, cardFrom);
+      bindField(inputAmount, cardAmount);
+      bindField(inputMessage, cardMessage, v => v ? `"${v}"` : '');
+      bindField(inputCode, cardCode);
+      bindField(inputExpiry, cardExpiry);
+      bindField(inputTerms, cardTerms);
+
+      // Card Flipping Logic
+      function flipCard() {
+        const isFlipped = cardFlipper.classList.toggle('flipped');
+        sideIndicator.textContent = isFlipped ? 'Vista: Dorso' : 'Vista: Frente';
+      }
+
+      headerFlipBtn.addEventListener('click', flipCard);
+      flipActionBtns.forEach(btn => btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        flipCard();
+      }));
+
+      document.querySelector('.card-front-face').addEventListener('click', (e) => {
+        if (!e.target.closest('button')) {
+          flipCard();
+        }
+      });
+
+      // Code Generator
+      randCodeBtn.addEventListener('click', () => {
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        let res = 'GIFT-';
+        for (let i = 0; i < 4; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
+        res += '-';
+        for (let i = 0; i < 2; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
+        
+        inputCode.value = res;
+        cardCode.textContent = res;
+        showToast('¡Código generado!');
+      });
+
+      // Theme Change
+      themeSelector.addEventListener('click', (e) => {
+        const btn = e.target.closest('.theme-opt');
+        if (!btn) return;
+
+        activeTheme = btn.getAttribute('data-theme');
+        
+        document.querySelectorAll('.theme-opt').forEach(b => {
+          b.classList.remove('border-emerald-800');
+          b.classList.add('border-transparent');
+        });
+
+        btn.classList.remove('border-transparent');
+        btn.classList.add('border-emerald-800');
+
+        setTheme(activeTheme);
+      });
+
+      function setTheme(theme) {
+        activeTheme = theme;
+        cardFlipper.className = `card-flipper ${theme}${cardFlipper.classList.contains('flipped') ? ' flipped' : ''}`;
+      }
+
+      // Hash-based Link Encoder/Decoder (Clean, Short URLs)
+      function createShareUrl() {
+        const data = {
+          b: inputBrand.value,
+          t: inputTo.value,
+          f: inputFrom.value,
+          a: inputAmount.value,
+          m: inputMessage.value,
+          c: inputCode.value,
+          e: inputExpiry.value,
+          r: inputTerms.value,
+          s: activeTheme
+        };
+
+        try {
+          const encoded = encodeURIComponent(btoa(JSON.stringify(data)));
+          const cleanUrl = window.location.origin + window.location.pathname + '#' + encoded;
+          return cleanUrl;
+        } catch (err) {
+          console.error(err);
+          return window.location.href;
+        }
+      }
+
+      function parseHash() {
+        const hash = window.location.hash.substring(1);
+        if (!hash) return false;
+
+        try {
+          const decoded = JSON.parse(atob(decodeURIComponent(hash)));
+
+          if (decoded.b) inputBrand.value = decoded.b;
+          if (decoded.t) inputTo.value = decoded.t;
+          if (decoded.f) inputFrom.value = decoded.f;
+          if (decoded.a) inputAmount.value = decoded.a;
+          if (decoded.m) inputMessage.value = decoded.m;
+          if (decoded.c) inputCode.value = decoded.c;
+          if (decoded.e) inputExpiry.value = decoded.e;
+          if (decoded.r) inputTerms.value = decoded.r;
+          if (decoded.s) setTheme(decoded.s);
+
+          [inputBrand, inputTo, inputFrom, inputAmount, inputMessage, inputCode, inputExpiry, inputTerms].forEach(i => {
+            i.dispatchEvent(new Event('input'));
+          });
+
+          // Show Recipient Mode UI
+          recipientBanner.classList.remove('hidden');
+          editorSidebar.classList.add('hidden');
+          previewArea.classList.remove('lg:col-span-7');
+          previewArea.classList.add('lg:col-span-12');
+
+          return true;
+        } catch (e) {
+          console.error("Invalid card hash", e);
+          return false;
+        }
+      }
+
+      // Clipboard logic
+      function copyText(str, msg) {
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(str).then(() => showToast(msg)).catch(() => fallbackCopy(str, msg));
+        } else {
+          fallbackCopy(str, msg);
+        }
+      }
+
+      function fallbackCopy(str, msg) {
+        const ta = document.createElement("textarea");
+        ta.value = str;
+        ta.style.position = "fixed";
+        ta.style.left = "-999999px";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try {
+          document.execCommand('copy');
+          showToast(msg);
+        } catch (err) {
+          showToast('No se pudo copiar');
+        }
+        document.body.removeChild(ta);
+      }
+
+      function shareLink() {
+        const link = createShareUrl();
+        copyText(link, '¡Link de la Gift Card copiado!');
+      }
+
+      headerShareBtn.addEventListener('click', shareLink);
+      mainShareBtn.addEventListener('click', shareLink);
+
+      copyCodeBtn.addEventListener('click', () => {
+        copyText(inputCode.value, 'Código de canje copiado');
+      });
+
+      // Toast Popup
+      let toastTimer;
+      function showToast(msg) {
+        toastMsg.textContent = msg;
+        toast.classList.remove('opacity-0');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.add('opacity-0'), 2800);
+      }
+
+      createNewCardBtn.addEventListener('click', () => {
+        window.location.hash = '';
+        window.location.reload();
+      });
+
+      // Init on load
+      parseHash();
+    });
+  </script>
+
+</body></html>
